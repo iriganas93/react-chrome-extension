@@ -1,60 +1,80 @@
-import '@src/Panel.css';
-import { t } from '@extension/i18n';
-import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
-import { exampleThemeStorage } from '@extension/storage';
-import { cn, ErrorDisplay, LoadingSpinner } from '@extension/ui';
 import { useEffect, useState } from 'react';
-import { sendMessage, onMessage } from 'webext-bridge/devtools';
-import type { ComponentPropsWithoutRef } from 'react';
+import { onMessage, sendMessage } from 'webext-bridge/devtools';
 
-const Panel = () => {
-  const [reply, setReply] = useState<string>('');
-  const { isLight } = useStorage(exampleThemeStorage);
-  const logo = isLight ? 'devtools-panel/logo_horizontal.svg' : 'devtools-panel/logo_horizontal_dark.svg';
+type Control =
+  | { id: string; type: 'number' | 'boolean' | 'color' | 'json'; value?: any; label?: string }
+  | { id: string; type: 'button'; label?: string }
+  | { id: string; type: 'table'; columns: any[]; data: any[] }
+  | { id: string; type: 'folder' | 'tab'; label?: string; controls: Control[] };
+
+type DevToolsRootConfig = { schemaVersion: number; tabs: Control[] };
+
+export default function Panel() {
+  const [config, setConfig] = useState<DevToolsRootConfig | null>(null);
+  const [log, setLog] = useState<string>('');
 
   useEffect(() => {
-    const off1 = onMessage('page:reply', ({ data }) => setReply(JSON.stringify(data)));
-    const off2 = onMessage('page:init', ({ data }) => setReply(`INIT ${JSON.stringify(data)}`));
+    // page -> panel pushes
+    const offCfg = onMessage('game:register-config', ({ data }) => {
+      const cfg = (data as any)?.config as DevToolsRootConfig | undefined;
+      if (cfg) setConfig(cfg);
+      setLog(l => l + '\n[CONFIG] ' + (cfg ? 'received' : 'invalid'));
+    });
+    const offUpd = onMessage('game:control-update', ({ data }) => {
+      // data is { controlId, value }
+      setLog(l => l + '\n[UPDATE] ' + JSON.stringify(data));
+    });
+
+    // pull current config on mount
+    (async () => {
+      try {
+        const res = await sendMessage<{ config: DevToolsRootConfig | null }>(
+          'devtools:request-config',
+          {},
+          'content-script',
+        );
+        if (res?.config) {
+          setConfig(res.config);
+          setLog(l => l + '\n[CONFIG] pulled on mount');
+        }
+      } catch {
+        /* ignore */
+      }
+    })();
+
     return () => {
-      off1();
-      off2();
+      offCfg();
+      offUpd();
     };
   }, []);
 
-  const pingPage = async () => {
-    // You can send to 'content-script' or directly 'window' (see note below)
-    await sendMessage('devtools:ping', { time: Date.now() }, 'content-script');
+  // Send changes to the page adapter
+  const setControl = async (controlId: string, value: any) => {
+    await sendMessage('devtools:control-change', { controlId, value }, 'content-script');
+  };
+  const triggerControl = async (controlId: string, buttonId?: string) => {
+    await sendMessage('devtools:control-trigger', { controlId, buttonId }, 'content-script');
   };
 
   return (
-    <div className={cn('App', isLight ? 'bg-slate-50' : 'bg-gray-800')}>
-      <header className={cn('App-header', isLight ? 'text-gray-900' : 'text-gray-100')}>
-        <img src={chrome.runtime.getURL(logo)} className="App-logo" alt="logo" />
-        <p>
-          Edit me at <code>pages/devtools-panel/src/Panel.tsx</code>
-        </p>
-        <ToggleButton onClick={exampleThemeStorage.toggle}>{t('toggleTheme')}</ToggleButton>
-        <button onClick={pingPage}>Ping inspected page</button>
-        <pre>{reply}</pre>
-      </header>
+    <div style={{ padding: 12, fontFamily: 'system-ui' }}>
+      <h3>Allwyn DevTools</h3>
+
+      <div style={{ margin: '8px 0' }}>
+        <button onClick={() => setControl('speed', 7)}>Set speed = 7</button>{' '}
+        <button onClick={() => triggerControl('action')}>Trigger "action"</button>{' '}
+        <button onClick={() => setControl('config-json', { foo: 'baz', nested: { x: 2 } })}>Update JSON</button>
+      </div>
+
+      <details open>
+        <summary>Config</summary>
+        <pre style={{ whiteSpace: 'pre-wrap' }}>{JSON.stringify(config, null, 2)}</pre>
+      </details>
+
+      <details>
+        <summary>Log</summary>
+        <pre style={{ whiteSpace: 'pre-wrap' }}>{log}</pre>
+      </details>
     </div>
   );
-};
-
-const ToggleButton = (props: ComponentPropsWithoutRef<'button'>) => {
-  const { isLight } = useStorage(exampleThemeStorage);
-
-  return (
-    <button
-      className={cn(
-        props.className,
-        'mt-4 rounded px-4 py-1 font-bold shadow hover:scale-105',
-        isLight ? 'bg-white text-black' : 'bg-black text-white',
-      )}
-      onClick={exampleThemeStorage.toggle}>
-      {props.children}
-    </button>
-  );
-};
-
-export default withErrorBoundary(withSuspense(Panel, <LoadingSpinner />), ErrorDisplay);
+}
