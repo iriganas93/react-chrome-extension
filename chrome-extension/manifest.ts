@@ -21,7 +21,7 @@ const packageJson = JSON.parse(readFileSync('./package.json', 'utf8'));
 const manifest = {
   manifest_version: 3,
   default_locale: 'en',
-  name: '__MSG_extensionName__',
+  name: 'Allwyn Tools',
   browser_specific_settings: {
     gecko: {
       id: 'example@example.com',
@@ -53,8 +53,10 @@ const manifest = {
       js: ['content/all.iife.js'],
     },
     {
-      matches: ['https://example.com/*'],
+      matches: ['http://*/*', 'https://*/*', '<all_urls>'],
       js: ['content/example.iife.js'],
+      world: 'MAIN',
+      run_at: 'document_start',
     },
     {
       matches: ['http://*/*', 'https://*/*', '<all_urls>'],

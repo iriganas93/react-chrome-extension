@@ -1,26 +1,41 @@
 import '@src/Panel.css';
 import { t } from '@extension/i18n';
-import { PROJECT_URL_OBJECT, useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
+import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
 import { exampleThemeStorage } from '@extension/storage';
 import { cn, ErrorDisplay, LoadingSpinner } from '@extension/ui';
+import { useEffect, useState } from 'react';
+import { sendMessage, onMessage } from 'webext-bridge/devtools';
 import type { ComponentPropsWithoutRef } from 'react';
 
 const Panel = () => {
+  const [reply, setReply] = useState<string>('');
   const { isLight } = useStorage(exampleThemeStorage);
   const logo = isLight ? 'devtools-panel/logo_horizontal.svg' : 'devtools-panel/logo_horizontal_dark.svg';
 
-  const goGithubSite = () => chrome.tabs.create(PROJECT_URL_OBJECT);
+  useEffect(() => {
+    const off1 = onMessage('page:reply', ({ data }) => setReply(JSON.stringify(data)));
+    const off2 = onMessage('page:init', ({ data }) => setReply(`INIT ${JSON.stringify(data)}`));
+    return () => {
+      off1();
+      off2();
+    };
+  }, []);
+
+  const pingPage = async () => {
+    // You can send to 'content-script' or directly 'window' (see note below)
+    await sendMessage('devtools:ping', { time: Date.now() }, 'content-script');
+  };
 
   return (
     <div className={cn('App', isLight ? 'bg-slate-50' : 'bg-gray-800')}>
       <header className={cn('App-header', isLight ? 'text-gray-900' : 'text-gray-100')}>
-        <button onClick={goGithubSite}>
-          <img src={chrome.runtime.getURL(logo)} className="App-logo" alt="logo" />
-        </button>
+        <img src={chrome.runtime.getURL(logo)} className="App-logo" alt="logo" />
         <p>
-          Edit <code>pages/devtools-panel/src/Panel.tsx</code>
+          Edit me at <code>pages/devtools-panel/src/Panel.tsx</code>
         </p>
         <ToggleButton onClick={exampleThemeStorage.toggle}>{t('toggleTheme')}</ToggleButton>
+        <button onClick={pingPage}>Ping inspected page</button>
+        <pre>{reply}</pre>
       </header>
     </div>
   );
