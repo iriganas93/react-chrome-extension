@@ -2,12 +2,18 @@ export const PROJECT_URL_OBJECT = {
   url: 'https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite',
 } as const;
 
+/**
+ * Messages sent from the game page to the devtools panel
+ */
 export const GAME_MESSAGES = {
   REGISTER_CONFIG: 'game:register-config',
   PAGE_INIT: 'game:page-init',
   CONTROL_UPDATE: 'game:control-update',
 } as const;
 
+/**
+ * Messages sent from the devtools
+ */
 export const DEV_TOOLS_MESSAGES = {
   REQUEST_CONFIG: 'devtools:request-config',
   CONTROL_CHANGE: 'devtools:control-change',

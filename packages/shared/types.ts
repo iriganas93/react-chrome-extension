@@ -7,6 +7,7 @@ export interface BaseControl {
 export interface WithValue<T> extends BaseControl {
   value: T;
   onChange?: (v: T) => void;
+  update?: (v: T) => void;
 }
 
 export interface NumberControlConfig extends WithValue<number> {
@@ -40,14 +41,13 @@ export interface ButtonGroupControlConfig extends BaseControl {
 
 export interface TableControlConfig<T = never> extends BaseControl {
   type: 'table';
-  columns: { key: keyof T; label: string; editable?: boolean }[];
+  columns: { key: keyof T; label: string }[];
   data: T[];
   onChange?: (newData: T[]) => void;
 }
 
-export interface JsonControlConfig extends BaseControl {
+export interface JsonControlConfig extends WithValue<object> {
   type: 'json';
-  value: unknown;
 }
 
 export interface Vector {
@@ -84,6 +84,15 @@ export type ControlConfigWithValue =
   | JsonControlConfig
   | VectorControlConfig;
 
+export type ControlValue = ControlConfigWithValue['value'];
+
+export type AugmentedControl = ControlConfigWithValue & {
+  __isProxied?: boolean;
+  __proxyRef?: AugmentedControl;
+  onChange: (v: ControlValue) => void;
+  update: (v: ControlValue) => void;
+};
+
 /** 🖼️ Renderable controls (no tabs) */
 
 export type RenderableControl =
@@ -99,22 +108,9 @@ export type RenderableControl =
   | SpineControlConfig
   | FolderConfig;
 
-/** 🔎 Map type → full control spec */
-export type SpecByType = {
-  number: NumberControlConfig;
-  boolean: BooleanControlConfig;
-  text: TextControlConfig;
-  color: ColorControlConfig;
-  button: ButtonControlConfig;
-  buttonGroup: ButtonGroupControlConfig;
-  table: TableControlConfig<unknown>;
-  json: JsonControlConfig;
-  vector: VectorControlConfig;
-  spine: SpineControlConfig;
-  folder: FolderConfig;
-};
-
 export type AnyControlConfig = RenderableControl | TabConfig;
+
+export type ControlType = RenderableControl['type'];
 
 export interface DevToolsRootConfig {
   schemaVersion: number;
@@ -122,5 +118,12 @@ export interface DevToolsRootConfig {
   initialTab?: string;
 }
 
-/** 🔒 Discriminant union helper */
-export type ControlType = RenderableControl['type'];
+export type ControlsChangePayload = {
+  controlId: string;
+  value: ControlValue;
+};
+
+export type ControlClickPayload = {
+  controlId: string;
+  buttonId?: string;
+};

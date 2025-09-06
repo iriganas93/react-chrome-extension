@@ -1,3 +1,4 @@
+import { DEV_TOOLS_MESSAGES, GAME_MESSAGES, DESTINATIONS } from '@extension/shared';
 import { useEffect, useState } from 'react';
 import { onMessage, sendMessage } from 'webext-bridge/devtools';
 
@@ -15,12 +16,12 @@ export default function Panel() {
 
   useEffect(() => {
     // page -> panel pushes
-    const offCfg = onMessage('game:register-config', ({ data }) => {
+    const offCfg = onMessage(GAME_MESSAGES.REGISTER_CONFIG, ({ data }) => {
       const cfg = (data as any)?.config as DevToolsRootConfig | undefined;
       if (cfg) setConfig(cfg);
       setLog(l => l + '\n[CONFIG] ' + (cfg ? 'received' : 'invalid'));
     });
-    const offUpd = onMessage('game:control-update', ({ data }) => {
+    const offUpd = onMessage(GAME_MESSAGES.CONTROL_UPDATE, ({ data }) => {
       // data is { controlId, value }
       setLog(l => l + '\n[UPDATE] ' + JSON.stringify(data));
     });
@@ -29,9 +30,9 @@ export default function Panel() {
     (async () => {
       try {
         const res = await sendMessage<{ config: DevToolsRootConfig | null }>(
-          'devtools:request-config',
+          DEV_TOOLS_MESSAGES.REQUEST_CONFIG,
           {},
-          'content-script',
+          DESTINATIONS.CONTENT_SCRIPT,
         );
         if (res?.config) {
           setConfig(res.config);
@@ -50,10 +51,10 @@ export default function Panel() {
 
   // Send changes to the page adapter
   const setControl = async (controlId: string, value: any) => {
-    await sendMessage('devtools:control-change', { controlId, value }, 'content-script');
+    await sendMessage(DEV_TOOLS_MESSAGES.CONTROL_CHANGE, { controlId, value }, DESTINATIONS.CONTENT_SCRIPT);
   };
   const triggerControl = async (controlId: string, buttonId?: string) => {
-    await sendMessage('devtools:control-trigger', { controlId, buttonId }, 'content-script');
+    await sendMessage(DEV_TOOLS_MESSAGES.CONTROL_TRIGGER, { controlId, buttonId }, DESTINATIONS.CONTENT_SCRIPT);
   };
 
   return (
@@ -61,7 +62,7 @@ export default function Panel() {
       <h3>Allwyn DevTools</h3>
 
       <div style={{ margin: '8px 0' }}>
-        <button onClick={() => setControl('speed', 7)}>Set speed = 7</button>{' '}
+        <button onClick={() => setControl('music', 7)}>Set speed = 7</button>{' '}
         <button onClick={() => triggerControl('action')}>Trigger "action"</button>{' '}
         <button onClick={() => setControl('config-json', { foo: 'baz', nested: { x: 2 } })}>Update JSON</button>
       </div>

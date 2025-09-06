@@ -2,10 +2,9 @@ import type {
   AnyControlConfig,
   ButtonControlConfig,
   ButtonGroupControlConfig,
-  ControlConfigWithValue,
+  AugmentedControl,
   FolderConfig,
   TabConfig,
-  TableControlConfig,
 } from '../../types.js';
 
 export const isFolder = (node: AnyControlConfig): node is FolderConfig => node.type === 'folder';
@@ -16,7 +15,4 @@ export const isButton = (node: AnyControlConfig): node is ButtonControlConfig =>
 
 export const isButtonGroup = (node: AnyControlConfig): node is ButtonGroupControlConfig => node.type === 'buttonGroup';
 
-export const isTable = (node: AnyControlConfig): node is TableControlConfig<any> => node.type === 'table';
-
-export const isWithValue = (node: AnyControlConfig): node is ControlConfigWithValue =>
-  'value' in (node as any) && typeof (node as any).type === 'string';
+export const isWithValue = (node: AnyControlConfig): node is AugmentedControl => 'value' in node;
