@@ -46,7 +46,7 @@ const manifest = {
   content_scripts: [
     {
       matches: ['http://*/*', 'https://*/*', '<all_urls>'],
-      js: ['content/all.iife.js'],
+      js: ['content/bridge.iife.js'],
     },
     {
       matches: ['http://*/*', 'https://*/*', '<all_urls>'],
