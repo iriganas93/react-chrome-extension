@@ -50,7 +50,7 @@ const manifest = {
     },
     {
       matches: ['http://*/*', 'https://*/*', '<all_urls>'],
-      js: ['content/example.iife.js'],
+      js: ['content/adapter.iife.js'],
       world: 'MAIN',
       run_at: 'document_start',
     },
