@@ -59,10 +59,6 @@ const manifest = {
       js: ['content-ui/all.iife.js'],
     },
     {
-      matches: ['https://example.com/*'],
-      js: ['content-ui/example.iife.js'],
-    },
-    {
       matches: ['http://*/*', 'https://*/*', '<all_urls>'],
       css: ['content.css'],
     },
