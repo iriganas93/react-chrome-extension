@@ -2,7 +2,14 @@
   "extends": "@extension/tsconfig/module",
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "dist"
+    "outDir": "dist",
+    "paths": {
+      "webext-bridge": ["webext-bridge-stub.ts"],
+      "webext-bridge/window": ["webext-bridge-stub.ts"],
+      "webext-bridge/content-script": ["webext-bridge-stub.ts"],
+      "webext-bridge/devtools": ["webext-bridge-stub.ts"],
+      "webext-bridge/background": ["webext-bridge-stub.ts"]
+    }
   },
   "include": ["lib", "index.mts"]
 }
