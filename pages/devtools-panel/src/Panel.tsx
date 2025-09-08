@@ -1,10 +1,5 @@
-import {
-  DEV_TOOLS_MESSAGES,
-  GAME_MESSAGES,
-  DESTINATIONS,
-  sendControlOnChangeMessage,
-  sendControlOnClickMessage,
-} from '@extension/shared';
+import { DEV_TOOLS_MESSAGES, GAME_MESSAGES, DESTINATIONS } from '@extension/shared';
+import { sendControlOnChangeMessage, sendControlOnClickMessage } from '@src/devtools-messages';
 import { useEffect, useState } from 'react';
 import { onMessage, sendMessage } from 'webext-bridge/devtools';
 

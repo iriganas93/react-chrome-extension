@@ -8,7 +8,7 @@ import {
   sendGameRegisterConfigMessage,
   sendGamePageInitMessage,
   sendGameControlUpdateMessage,
-  cloneForPanel,
+  toJsonValue,
 } from '@extension/shared';
 import { collectControls, controls } from '@src/services/controls';
 import { setNamespace, onMessage } from 'webext-bridge/window';
@@ -84,7 +84,7 @@ type WindowWithAdapter = Window & { __DEV_TOOLS_ADAPTER?: typeof adapter };
 
 // Panel asks for current config → return JSON-safe copy
 onMessage(DEV_TOOLS_MESSAGES.REQUEST_CONFIG, async () => ({
-  config: lastConfig ? cloneForPanel(lastConfig) : null,
+  config: lastConfig ? toJsonValue(lastConfig) : null,
 }));
 
 // Panel sets a control (value/payload) → call callbacks & push update
