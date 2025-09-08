@@ -1,4 +1,10 @@
-import { DEV_TOOLS_MESSAGES, GAME_MESSAGES, DESTINATIONS } from '@extension/shared';
+import {
+  DEV_TOOLS_MESSAGES,
+  GAME_MESSAGES,
+  DESTINATIONS,
+  sendControlOnChangeMessage,
+  sendControlOnClickMessage,
+} from '@extension/shared';
 import { useEffect, useState } from 'react';
 import { onMessage, sendMessage } from 'webext-bridge/devtools';
 
@@ -49,22 +55,16 @@ export default function Panel() {
     };
   }, []);
 
-  // Send changes to the page adapter
-  const setControl = async (controlId: string, value: any) => {
-    await sendMessage(DEV_TOOLS_MESSAGES.CONTROL_CHANGE, { controlId, value }, DESTINATIONS.CONTENT_SCRIPT);
-  };
-  const triggerControl = async (controlId: string, buttonId?: string) => {
-    await sendMessage(DEV_TOOLS_MESSAGES.CONTROL_TRIGGER, { controlId, buttonId }, DESTINATIONS.CONTENT_SCRIPT);
-  };
-
   return (
     <div style={{ padding: 12, fontFamily: 'system-ui' }}>
       <h3>Allwyn DevTools</h3>
 
       <div style={{ margin: '8px 0' }}>
-        <button onClick={() => setControl('music', 7)}>Set speed = 7</button>{' '}
-        <button onClick={() => triggerControl('action')}>Trigger "action"</button>{' '}
-        <button onClick={() => setControl('config-json', { foo: 'baz', nested: { x: 2 } })}>Update JSON</button>
+        <button onClick={() => sendControlOnChangeMessage('music', 7)}>Set speed = 7</button>{' '}
+        <button onClick={() => sendControlOnClickMessage('action')}>Trigger "action"</button>{' '}
+        <button onClick={() => sendControlOnChangeMessage('config-json', { foo: 'baz', nested: { x: 2 } })}>
+          Update JSON
+        </button>
       </div>
 
       <details open>

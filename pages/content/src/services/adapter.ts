@@ -79,7 +79,8 @@ const adapter = {
 };
 
 // expose to the page/game
-(window as any).__DEV_TOOLS_ADAPTER = adapter;
+type WindowWithAdapter = Window & { __DEV_TOOLS_ADAPTER?: typeof adapter };
+(window as WindowWithAdapter).__DEV_TOOLS_ADAPTER = adapter;
 
 // Panel asks for current config → return JSON-safe copy
 onMessage(DEV_TOOLS_MESSAGES.REQUEST_CONFIG, async () => ({
@@ -88,7 +89,7 @@ onMessage(DEV_TOOLS_MESSAGES.REQUEST_CONFIG, async () => ({
 
 // Panel sets a control (value/payload) → call callbacks & push update
 onMessage(DEV_TOOLS_MESSAGES.CONTROL_CHANGE, ({ data }) => {
-  const { controlId, value } = (data || {}) as ControlsChangePayload;
+  const { controlId, value } = data as ControlsChangePayload;
   const control = controls.get(controlId);
   if (!control) return;
 
@@ -104,7 +105,7 @@ onMessage(DEV_TOOLS_MESSAGES.CONTROL_CHANGE, ({ data }) => {
 
 // Panel triggers button/buttonGroup → call onClick handlers
 onMessage(DEV_TOOLS_MESSAGES.CONTROL_TRIGGER, ({ data }) => {
-  const { controlId, buttonId } = (data || {}) as ControlClickPayload;
+  const { controlId, buttonId } = data as ControlClickPayload;
   const raw = controls.get(controlId);
   if (!raw) return;
 

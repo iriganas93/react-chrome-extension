@@ -36,7 +36,7 @@ export interface ButtonControlConfig extends BaseControl {
 
 export interface ButtonGroupControlConfig extends BaseControl {
   type: 'buttonGroup';
-  buttons: { id: string; label: string; onClick?: () => void }[];
+  buttons: ButtonControlConfig[];
 }
 
 export interface TableControlConfig<T = never> extends BaseControl {
@@ -93,9 +93,7 @@ export type AugmentedControl = ControlConfigWithValue & {
   update: (v: ControlValue) => void;
 };
 
-/** 🖼️ Renderable controls (no tabs) */
-
-export type RenderableControl =
+export type AnyControlConfig =
   | NumberControlConfig
   | BooleanControlConfig
   | TextControlConfig
@@ -106,11 +104,10 @@ export type RenderableControl =
   | JsonControlConfig
   | VectorControlConfig
   | SpineControlConfig
-  | FolderConfig;
+  | FolderConfig
+  | TabConfig;
 
-export type AnyControlConfig = RenderableControl | TabConfig;
-
-export type ControlType = RenderableControl['type'];
+export type ControlType = AnyControlConfig['type'];
 
 export interface DevToolsRootConfig {
   schemaVersion: number;
