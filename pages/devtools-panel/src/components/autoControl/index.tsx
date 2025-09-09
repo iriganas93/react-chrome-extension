@@ -5,6 +5,8 @@ import ColorControl from '@src/components/controls/color';
 import Folder from '@src/components/controls/folder';
 import JsonControl from '@src/components/controls/json';
 import NumberControl from '@src/components/controls/number';
+import RadioControl from '@src/components/controls/radio';
+import SelectControl from '@src/components/controls/select';
 import SpineControl from '@src/components/controls/spine';
 import TabContent from '@src/components/controls/tabContent';
 import TableControl from '@src/components/controls/table';
@@ -23,6 +25,8 @@ const COMPONENT_MAP: ControlComponentsMap = {
   json: JsonControl,
   vector: VectorControl,
   spine: SpineControl,
+  select: SelectControl,
+  radio: RadioControl,
   folder: Folder,
   tab: TabContent,
 };

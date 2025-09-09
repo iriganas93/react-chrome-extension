@@ -8,5 +8,5 @@ export default function ColorControl(controlConfig: ColorControlConfig) {
   //   await handleControlChange(e.target.value);
   // };
 
-  return <div>Render for {controlConfig.label}</div>;
+  return <div>Render for {controlConfig.id}</div>;
 }

@@ -12,6 +12,11 @@ export interface WithValue<T> extends BaseControl {
   update?: (v: T) => void;
 }
 
+export interface WithMultipleData<T> extends WithValue<T> {
+  data: T[];
+  updateData?: (data: T[]) => void;
+}
+
 export interface NumberControlConfig extends WithValue<number> {
   type: 'number';
   min?: number;
@@ -41,11 +46,10 @@ export interface ButtonGroupControlConfig extends BaseControl {
   buttons: ButtonControlConfig[];
 }
 
-export interface TableControlConfig<T = object> extends BaseControl {
+export interface TableControlConfig extends BaseControl {
   type: 'table';
-  columns: { key: keyof T; label: string }[];
-  data: T[];
-  onChange?: (newData: T[]) => void;
+  columns: { key: string; label: string }[];
+  data: object[];
 }
 
 export interface JsonControlConfig extends WithValue<object> {
@@ -65,6 +69,14 @@ export interface SpineControlConfig extends BaseControl {
   type: 'spine';
   skeleton: string;
   atlas: string;
+}
+
+export interface SelectControlConfig extends WithMultipleData<string | number> {
+  type: 'select';
+}
+
+export interface RadioControlConfig extends WithMultipleData<string | number> {
+  type: 'radio';
 }
 
 export interface FolderConfig extends BaseControl {
@@ -102,10 +114,12 @@ export type AnyControlConfig =
   | ColorControlConfig
   | ButtonControlConfig
   | ButtonGroupControlConfig
-  | TableControlConfig<unknown>
+  | TableControlConfig
   | JsonControlConfig
   | VectorControlConfig
   | SpineControlConfig
+  | SelectControlConfig
+  | RadioControlConfig
   | FolderConfig
   | TabConfig;
 
@@ -122,6 +136,8 @@ export type ControlConfigByType = {
   json: JsonControlConfig;
   vector: VectorControlConfig;
   spine: SpineControlConfig;
+  select: SelectControlConfig;
+  radio: RadioControlConfig;
   folder: FolderConfig;
   tab: TabConfig;
 };

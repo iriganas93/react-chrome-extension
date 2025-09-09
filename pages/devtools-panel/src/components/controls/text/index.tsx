@@ -8,5 +8,5 @@ export default function TextControl(controlConfig: TextControlConfig) {
   //   await handleControlChange(e.target.value);
   // };
 
-  return <div>Render for {controlConfig.label}</div>;
+  return <div>Render for {controlConfig.id}</div>;
 }

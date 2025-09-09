@@ -8,5 +8,5 @@ export default function BooleanControl(controlConfig: BooleanControlConfig) {
   //   await handleControlChange(e.target.checked);
   // };
 
-  return <div>Render for {controlConfig.label}</div>;
+  return <div>Render for {controlConfig.id}</div>;
 }

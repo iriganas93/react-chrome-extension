@@ -1,7 +1,7 @@
 // import { useControl } from '@src/hooks/useControl';
-import type { TableControlConfig } from '@extension/shared';
+import type { RadioControlConfig } from '@extension/shared';
 
-export default function TableControl(controlConfig: TableControlConfig) {
+export default function RadioControl(controlConfig: RadioControlConfig) {
   // const { controlValue, handleControlChange } = useControl(controlConfig); // to register the control and handle updates
   //
   // const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
