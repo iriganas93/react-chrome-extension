@@ -34,8 +34,8 @@ const adapter = {
     controls.clear();
     rootConfig.tabs.forEach(collectControls);
 
-    sendGameRegisterConfigMessage(rootConfig);
     sendGamePageInitMessage();
+    sendGameRegisterConfigMessage(rootConfig);
 
     return adapter;
   },

@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 export interface BaseControl {
   id: string;
   type: string;
@@ -39,7 +41,7 @@ export interface ButtonGroupControlConfig extends BaseControl {
   buttons: ButtonControlConfig[];
 }
 
-export interface TableControlConfig<T = never> extends BaseControl {
+export interface TableControlConfig<T = object> extends BaseControl {
   type: 'table';
   columns: { key: keyof T; label: string }[];
   data: T[];
@@ -109,6 +111,21 @@ export type AnyControlConfig =
 
 export type ControlType = AnyControlConfig['type'];
 
+export type ControlConfigByType = {
+  number: NumberControlConfig;
+  boolean: BooleanControlConfig;
+  text: TextControlConfig;
+  color: ColorControlConfig;
+  button: ButtonControlConfig;
+  buttonGroup: ButtonGroupControlConfig;
+  table: TableControlConfig;
+  json: JsonControlConfig;
+  vector: VectorControlConfig;
+  spine: SpineControlConfig;
+  folder: FolderConfig;
+  tab: TabConfig;
+};
+
 export interface DevToolsRootConfig {
   schemaVersion: number;
   tabs: TabConfig[];
@@ -124,3 +141,23 @@ export type ControlClickPayload = {
   controlId: string;
   buttonId?: string;
 };
+
+export type ControlUpdatePayload = {
+  controlId: string;
+  value: ControlValue;
+};
+
+export type PageInitPayload = {
+  ready: boolean;
+  href: string;
+};
+
+export type RegisterConfigPayload = {
+  config: DevToolsRootConfig;
+};
+
+export type ControlComponentsMap = {
+  [K in ControlType]: (props: ControlConfigByType[K]) => JSX.Element;
+};
+
+export type ControlComponent<T extends ControlType> = (props: ControlConfigByType[T]) => JSX.Element;
