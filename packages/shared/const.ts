@@ -27,7 +27,7 @@ export const DESTINATIONS = {
   WINDOW: 'window',
 } as const;
 
-export const NAMESPACE = 'com.allwyn.devtools';
+export const NAMESPACE = 'allwyn.devtools';
 
 export type Destination = (typeof DESTINATIONS)[keyof typeof DESTINATIONS];
 
