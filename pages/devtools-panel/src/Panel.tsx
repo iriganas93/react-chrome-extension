@@ -1,8 +1,10 @@
 import Config from '@src/components/config';
 import { sendControlOnChangeMessage, sendControlOnClickMessage } from '@src/devtools-messages';
+import { useGameListeners } from '@src/hooks/useGameListeners';
 import { usePageConnection } from '@src/hooks/usePageConnection';
 
 export default function Panel() {
+  useGameListeners();
   const connection = usePageConnection();
   if (!connection || !connection.ready) {
     return <h3>Connecting</h3>;

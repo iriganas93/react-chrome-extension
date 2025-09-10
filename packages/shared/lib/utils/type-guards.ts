@@ -16,3 +16,5 @@ export const isButton = (node: AnyControlConfig): node is ButtonControlConfig =>
 export const isButtonGroup = (node: AnyControlConfig): node is ButtonGroupControlConfig => node.type === 'buttonGroup';
 
 export const isWithValue = (node: AnyControlConfig): node is AugmentedControl => 'value' in node;
+
+export const isWithClickCallback = (node: AnyControlConfig): node is ButtonControlConfig => 'onClick' in node;

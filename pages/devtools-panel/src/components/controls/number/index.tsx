@@ -2,8 +2,8 @@ import { useControl } from '@src/hooks/useControl';
 import type { NumberControlConfig } from '@extension/shared';
 
 export default function NumberControl(controlConfig: NumberControlConfig) {
-  console.log('rendering NumberControl');
   const { controlValue, handleControlChange } = useControl(controlConfig); // to register the control and handle updates
+  const { id, label } = controlConfig;
 
   const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     await handleControlChange(e.target.valueAsNumber);
@@ -11,7 +11,10 @@ export default function NumberControl(controlConfig: NumberControlConfig) {
 
   return (
     <div>
+      <label htmlFor={id}>{label ?? id}</label>
       <input
+        id={id}
+        name={`control-${id}`}
         type="number"
         step={controlConfig.step}
         min={controlConfig.min}
