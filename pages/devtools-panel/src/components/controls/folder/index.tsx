@@ -1,4 +1,4 @@
-import AutoControl from '@src/components/autoControl';
+import AutoControl from '@src/components/controls/autoControl';
 import type { FolderConfig } from '@extension/shared';
 
 export default function Folder(config: FolderConfig) {

@@ -1,6 +1,6 @@
 // src/events/controlBus.ts
 type ControlUpdateEvent = {
-  controlEventId: string;
+  event: string;
   value: unknown;
 };
 
@@ -9,25 +9,25 @@ type Handler = (payload: ControlUpdateEvent) => void;
 class ControlBus {
   private map = new Map<string, Set<Handler>>(); // key = controlId
 
-  on(controlEventId: string, handler: Handler) {
-    let set = this.map.get(controlEventId);
+  on(event: string, handler: Handler) {
+    let set = this.map.get(event);
     if (!set) {
       set = new Set();
-      this.map.set(controlEventId, set);
+      this.map.set(event, set);
     }
     set.add(handler);
-    return () => this.off(controlEventId, handler); // unsubscribe
+    return () => this.off(event, handler); // unsubscribe
   }
 
-  off(controlEventId: string, handler: Handler) {
-    const set = this.map.get(controlEventId);
+  off(event: string, handler: Handler) {
+    const set = this.map.get(event);
     if (!set) return;
     set.delete(handler);
-    if (set.size === 0) this.map.delete(controlEventId);
+    if (set.size === 0) this.map.delete(event);
   }
 
   emit(payload: ControlUpdateEvent) {
-    const set = this.map.get(payload.controlEventId);
+    const set = this.map.get(payload.event);
     if (!set) return;
     for (const h of set) {
       try {

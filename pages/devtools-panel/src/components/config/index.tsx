@@ -1,4 +1,4 @@
-import AutoControl from '@src/components/autoControl';
+import AutoControl from '@src/components/controls/autoControl';
 import TabsNavigation from '@src/components/controls/tabsNavigation';
 import { useConfig } from '@src/hooks/useConfig';
 

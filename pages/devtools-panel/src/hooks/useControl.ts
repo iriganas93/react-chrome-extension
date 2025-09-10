@@ -6,7 +6,6 @@ import type { ControlConfigWithValue } from '@extension/shared';
 
 export const useControl = <T extends ControlConfigWithValue>(controlConfig: T) => {
   const [controlValue, setControlValue] = useState<T['value']>(controlConfig.value);
-  console.log(`Initialized control ${controlConfig.id} with value: `, controlValue);
 
   useEffect(
     () =>

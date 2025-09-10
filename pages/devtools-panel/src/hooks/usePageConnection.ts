@@ -1,6 +1,6 @@
-import { GAME_MESSAGES } from '@extension/shared';
+import { controlBus } from '@src/services/controlBus';
+import { pageConnectionEvent } from '@src/utils/events';
 import { useEffect, useState } from 'react';
-import { onMessage } from 'webext-bridge/devtools';
 import type { PageInitPayload } from '@extension/shared';
 
 export const usePageConnection = () => {
@@ -8,17 +8,15 @@ export const usePageConnection = () => {
     ready: false,
     href: '',
   });
+  const isConnected = connection && connection.ready;
 
-  useEffect(() => {
-    // page -> panel pushes
-    const offCfg = onMessage(GAME_MESSAGES.PAGE_INIT, ({ data }) => {
-      if (data) setConnection(data as PageInitPayload);
-    });
+  useEffect(
+    () =>
+      controlBus.on(pageConnectionEvent, ({ value }) => {
+        setConnection(value as PageInitPayload);
+      }),
+    [],
+  );
 
-    return () => {
-      offCfg();
-    };
-  }, []);
-
-  return connection;
+  return { connection, isConnected };
 };

@@ -1,5 +1,5 @@
 // import { useControl } from '@src/hooks/useControl';
-import type { VectorControlConfig } from '@extension/shared';
+import type { VectorControlConfig } from '../../../../../../packages/shared';
 
 export default function VectorControl(controlConfig: VectorControlConfig) {
   // const { controlValue, handleControlChange } = useControl(controlConfig); // to register the control and handle updates

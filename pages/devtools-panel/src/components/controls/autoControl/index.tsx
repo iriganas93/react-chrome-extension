@@ -11,8 +11,13 @@ import SpineControl from '@src/components/controls/spine';
 import TabContent from '@src/components/controls/tabContent';
 import TableControl from '@src/components/controls/table';
 import TextControl from '@src/components/controls/text';
-import VectorControl from '@src/components/vector';
-import type { ControlComponent, ControlComponentsMap, ControlType, ControlConfigByType } from '@extension/shared';
+import VectorControl from '@src/components/controls/vector';
+import type {
+  ControlComponent,
+  ControlComponentsMap,
+  ControlType,
+  ControlConfigByType,
+} from '../../../../../../packages/shared/index.mjs';
 
 const COMPONENT_MAP: ControlComponentsMap = {
   number: NumberControl,
