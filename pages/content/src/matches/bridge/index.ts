@@ -1,9 +1,9 @@
-import { NAMESPACE, DEV_TOOLS_MESSAGES, GAME_MESSAGES, DESTINATIONS, logger } from '@extension/shared';
+import { NAMESPACE, DEV_TOOLS_MESSAGES, GAME_MESSAGES, DESTINATIONS } from '@extension/shared';
 import { allowWindowMessaging, onMessage, sendMessage } from 'webext-bridge/content-script';
 
 allowWindowMessaging(NAMESPACE);
 
-logger.log('Bridge content script loaded');
+// logger.log('Bridge content script loaded');
 
 // DevTools ➜ Page (request/response)
 onMessage(
