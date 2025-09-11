@@ -19,7 +19,8 @@ let lastConfig: DevToolsRootConfig | null = null;
 
 const adapter = {
   /** Initialize with full config (callbacks preserved locally). */
-  init(rootConfig: DevToolsRootConfig) {
+  init(rootConfig: DevToolsRootConfig, app?: unknown) {
+    console.log(app);
     lastConfig = rootConfig;
     controls.clear();
     rootConfig.tabs.forEach(collectControls);

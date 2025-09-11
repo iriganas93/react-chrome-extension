@@ -38,6 +38,9 @@
     "postinstall": "pnpm copy-env"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "webext-bridge": "^6.0.1"

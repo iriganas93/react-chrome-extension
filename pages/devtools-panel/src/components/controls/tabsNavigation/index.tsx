@@ -1,3 +1,4 @@
+import { Tab, Tabs } from '@mui/material';
 import type { TabConfig } from '@extension/shared';
 
 export interface TabsNavigationProps {
@@ -7,10 +8,10 @@ export interface TabsNavigationProps {
 export default function TabsNavigation({ tabs }: TabsNavigationProps) {
   if (!tabs || tabs.length === 0) return <></>;
   return (
-    <div>
+    <Tabs>
       {tabs.map((tabConfig, index) => (
-        <div key={index}>{tabConfig.title}</div>
+        <Tab key={`tab-nav-${index}`} label={tabConfig.title} />
       ))}
-    </div>
+    </Tabs>
   );
 }
