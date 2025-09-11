@@ -12,7 +12,7 @@ export const usePageConnection = () => {
 
   useEffect(
     () =>
-      controlBus.on(pageConnectionEvent, ({ value }) => {
+      controlBus.on(pageConnectionEvent(), ({ value }) => {
         setConnection(value as PageInitPayload);
       }),
     [],
