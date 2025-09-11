@@ -44,6 +44,7 @@ export class Control {
 
   onChange(value: ControlValue) {
     if (isWithValue(this._config) && typeof this._config.onChange === 'function') {
+      this._value = value;
       this._config.onChange?.(value);
       return;
     }
