@@ -1,1 +1,8 @@
 @import '@extension/ui/global.css';
+
+.json-viewer {
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #e5e5e5;
+  white-space: pre-wrap;
+}

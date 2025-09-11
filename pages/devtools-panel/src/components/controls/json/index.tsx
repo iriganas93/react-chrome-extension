@@ -8,5 +8,9 @@ export default function JsonControl(controlConfig: JsonControlConfig) {
   //   await handleControlChange(e.target.value);
   // };
 
-  return <div>Render for {controlConfig.id}</div>;
+  return (
+    <div>
+      <pre className="json-viewer">{JSON.stringify(controlConfig.value, null, 2)}</pre>
+    </div>
+  );
 }
