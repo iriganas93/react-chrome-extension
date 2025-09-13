@@ -11,7 +11,7 @@ interface TabsProps {
 
 export default function Tabs({ config }: TabsProps) {
   const [value, setValue] = useState(0);
-  const tabs = [getPageConfigTab(config), ...config.tabs];
+  const tabs = [...config.tabs, getPageConfigTab(config)];
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);

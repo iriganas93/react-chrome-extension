@@ -3,7 +3,7 @@ import type { FolderConfig } from '@extension/shared';
 
 export default function Folder(config: FolderConfig) {
   return (
-    <details id={`folder-${config.id}`} open>
+    <details id={`folder-${config.id}`} className="folder" open>
       <summary>{config.label ?? config.id}</summary>
       <pre style={{ whiteSpace: 'pre-wrap' }}>
         {config.controls.map((controlConfig, index) => (

@@ -1,5 +1,6 @@
 import { FormControlLabel, Switch } from '@mui/material';
 import { ControlContainer } from '@src/components/common/controlContainer';
+import { ControlWithLabel } from '@src/components/common/controlWithLabel';
 import { useControl } from '@src/hooks/useControl';
 import type { BooleanControlConfig } from '@extension/shared';
 
@@ -13,17 +14,19 @@ export default function BooleanControl(controlConfig: BooleanControlConfig) {
 
   return (
     <ControlContainer>
-      <FormControlLabel
-        label={label ?? id}
-        control={
-          <Switch
-            size="small"
-            checked={controlValue}
-            onChange={onChangeHandler}
-            slotProps={{ input: { 'aria-label': 'controlled' } }}
-          />
-        }
-      />
+      <ControlWithLabel config={controlConfig}>
+        <FormControlLabel
+          label={label ?? id}
+          control={
+            <Switch
+              size="small"
+              checked={controlValue}
+              onChange={onChangeHandler}
+              slotProps={{ input: { 'aria-label': 'controlled' } }}
+            />
+          }
+        />
+      </ControlWithLabel>
     </ControlContainer>
   );
 }

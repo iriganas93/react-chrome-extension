@@ -1,12 +1,12 @@
-// import { useControl } from '@src/hooks/useControl';
+import { sendControlOnClickMessage } from '@src/devtools-messages';
 import type { ButtonControlConfig } from '@extension/shared';
 
 export default function ButtonControl(controlConfig: ButtonControlConfig) {
-  // const { controlValue, handleControlChange } = useControl(controlConfig); // to register the control and handle updates
-  //
-  // const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   await handleControlChange(e.target.value);
-  // };
+  const { id, label } = controlConfig;
 
-  return <div>Render for {controlConfig.id}</div>;
+  return (
+    <div className="button-container flex justify-center">
+      <button onClick={() => sendControlOnClickMessage(id)}>{label ?? id}</button>
+    </div>
+  );
 }
