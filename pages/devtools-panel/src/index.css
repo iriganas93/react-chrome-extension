@@ -1,13 +1,11 @@
 @import '@extension/ui/global.css';
 
-.json-viewer {
-  padding: 10px;
-  border-radius: 4px;
-  background-color: #e5e5e5;
-  white-space: pre-wrap;
+body {
+  background: #f6f8fe;
 }
 
 .folder {
+  background: #fff;
   border-radius: 8px;
   border: 1px solid #e5e5e5;
 
@@ -16,9 +14,17 @@
     font-weight: 700;
     padding: 10px;
     border-bottom: 1px solid #e5e5e5;
+    cursor: pointer;
   }
 
   pre {
-    padding: 10px 15px;
+    padding: 0;
+  }
+
+  .json-viewer {
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #edf1fa;
+    white-space: pre-wrap;
   }
 }

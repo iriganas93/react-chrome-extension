@@ -6,13 +6,11 @@ type ControlContainerProps = {
   config: BaseControl;
 };
 
-export const ControlWithLabel = ({ children, config }: ControlContainerProps) => {
+export const ControlWithLabelCol = ({ children, config }: ControlContainerProps) => {
   const { id, label } = config;
   return (
-    <div className="flex w-full items-center justify-between">
-      <label htmlFor={id} className="pr-2 text-xs font-semibold">
-        {label ?? id}:
-      </label>
+    <div className="flex w-full flex-col gap-2">
+      <span className="text-xs font-semibold">{label || id}:</span>
       {children}
     </div>
   );

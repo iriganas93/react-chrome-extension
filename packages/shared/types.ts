@@ -65,10 +65,14 @@ export interface VectorControlConfig extends WithValue<Vector> {
   type: 'vector';
 }
 
-export interface SpineControlConfig extends BaseControl {
-  type: 'spine';
+export interface SpineData {
   skeleton: string;
   atlas: string;
+}
+
+export interface SpineControlConfig extends BaseControl {
+  type: 'spine';
+  value: SpineData;
 }
 
 export interface SelectControlConfig extends WithMultipleData<string | number> {

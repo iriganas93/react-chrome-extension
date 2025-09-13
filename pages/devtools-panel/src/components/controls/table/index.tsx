@@ -1,4 +1,3 @@
-// import { useControl } from '@src/hooks/useControl';
 import {
   Paper,
   Table as MuiTable,
@@ -9,6 +8,8 @@ import {
   TablePagination,
   TableRow,
 } from '@mui/material';
+import { ControlContainer } from '@src/components/common/controlContainer';
+import { ControlWithLabelCol } from '@src/components/common/controlWithLabelCol';
 import * as React from 'react';
 import type { TableControlConfig } from '@extension/shared';
 
@@ -42,49 +43,53 @@ export default function TableControl(controlConfig: TableControlConfig) {
   };
 
   return (
-    <Paper elevation={0} sx={{ border: 1, borderColor: 'divider', borderRadius: 2, overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 420 }}>
-        <MuiTable stickyHeader size="small" aria-label={`table-${id}`}>
-          <TableHead>
-            <TableRow>
-              {columns.map(col => (
-                <TableCell key={col.key} sx={{ fontWeight: 600 }}>
-                  {col.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {paged.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={columns.length} align="center" sx={{ py: 6, color: 'text.secondary' }}>
-                  No data
-                </TableCell>
-              </TableRow>
-            ) : (
-              paged.map((row, idx) => (
-                <TableRow hover key={`${id}-${page}-${idx}`}>
+    <ControlContainer>
+      <ControlWithLabelCol config={controlConfig}>
+        <Paper elevation={0} sx={{ border: 1, borderColor: 'divider', borderRadius: 2, overflow: 'hidden' }}>
+          <TableContainer sx={{ maxHeight: 420 }}>
+            <MuiTable stickyHeader size="small" aria-label={`table-${id}`}>
+              <TableHead>
+                <TableRow>
                   {columns.map(col => (
-                    <TableCell key={col.key}>{renderCell((row as never)[col.key])}</TableCell>
+                    <TableCell key={col.key} sx={{ fontWeight: 600 }}>
+                      {col.label}
+                    </TableCell>
                   ))}
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </MuiTable>
-      </TableContainer>
+              </TableHead>
 
-      <TablePagination
-        component="div"
-        rowsPerPageOptions={[5, 10, 25, 50, 100]}
-        count={data.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        sx={{ borderTop: 1, borderColor: 'divider' }}
-      />
-    </Paper>
+              <TableBody>
+                {paged.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={columns.length} align="center" sx={{ py: 6, color: 'text.secondary' }}>
+                      No data
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  paged.map((row, idx) => (
+                    <TableRow hover key={`${id}-${page}-${idx}`}>
+                      {columns.map(col => (
+                        <TableCell key={col.key}>{renderCell((row as never)[col.key])}</TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </MuiTable>
+          </TableContainer>
+
+          <TablePagination
+            component="div"
+            rowsPerPageOptions={[5, 10, 25, 50, 100]}
+            count={data.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{ borderTop: 1, borderColor: 'divider' }}
+          />
+        </Paper>
+      </ControlWithLabelCol>
+    </ControlContainer>
   );
 }

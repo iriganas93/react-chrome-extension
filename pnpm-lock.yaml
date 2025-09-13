@@ -14,6 +14,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.1.5)(react@19.1.0))(@types/react@19.1.5)(react@19.1.0)
+      '@esotericsoftware/spine-player':
+        specifier: ^4.2.90
+        version: 4.2.90
       '@mui/material':
         specifier: ^7.3.2
         version: 7.3.2(@emotion/react@11.14.0(@types/react@19.1.5)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.1.5)(react@19.1.0))(@types/react@19.1.5)(react@19.1.0))(@types/react@19.1.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -850,6 +853,15 @@ packages:
   '@eslint/plugin-kit@0.3.1':
     resolution: {integrity: sha512-0J+zgWxHN+xXONWIyPWKFMgVuJoZuGiIFu8yxk7RJjxkzpGmyja5wRFqZIVtjDVOQpV+Rw0iOAjYPE2eQyjr0w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@esotericsoftware/spine-core@4.2.90':
+    resolution: {integrity: sha512-4pR2r7ujN9lm1nYLpDMHV6D078EAo/Ks6Ut3n3B/Lx9HdmkEAoZ01s+zB3xK88QWCkCbLu5UHe/AZbbwNXnc8Q==}
+
+  '@esotericsoftware/spine-player@4.2.90':
+    resolution: {integrity: sha512-+HMKem2FUWPcZOCKXiYnEl5Rk/DmZKm4UH2lmc44RUnzk9cTdBeVddagYrxOFmDrxU7dFslCkCvJjgiXRNdYeA==}
+
+  '@esotericsoftware/spine-webgl@4.2.90':
+    resolution: {integrity: sha512-uTeCF4Q4cjBjJTzJjP9zOTWtzsk+ij3r9ndUO8rXaWDuEE6LTXViC44oPHWwRfysu0KgdNOyg//dYHMqQiAkPw==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -5417,6 +5429,16 @@ snapshots:
     dependencies:
       '@eslint/core': 0.14.0
       levn: 0.4.1
+
+  '@esotericsoftware/spine-core@4.2.90': {}
+
+  '@esotericsoftware/spine-player@4.2.90':
+    dependencies:
+      '@esotericsoftware/spine-webgl': 4.2.90
+
+  '@esotericsoftware/spine-webgl@4.2.90':
+    dependencies:
+      '@esotericsoftware/spine-core': 4.2.90
 
   '@humanfs/core@0.19.1': {}
 
