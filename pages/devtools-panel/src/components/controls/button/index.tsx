@@ -8,7 +8,11 @@ export default function ButtonControl(controlConfig: ButtonControlConfig) {
   return (
     <ControlContainer>
       <div className="button-container flex justify-center">
-        <button onClick={() => sendControlOnClickMessage(id)}>{label ?? id}</button>
+        <button
+          className="bg-accent rounded-md px-4 py-2 font-semibold text-white"
+          onClick={() => sendControlOnClickMessage(id)}>
+          {label ?? id}
+        </button>
       </div>
     </ControlContainer>
   );
