@@ -5,5 +5,5 @@ type ControlContainerProps = {
 };
 
 export const ControlContainer = ({ children }: ControlContainerProps) => (
-  <div className="w-full border-b border-b-gray-200 px-4 py-4">{children}</div>
+  <div className="control w-full border-b border-b-gray-200 px-4 py-4">{children}</div>
 );

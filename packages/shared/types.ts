@@ -75,11 +75,11 @@ export interface SpineControlConfig extends BaseControl {
   value: SpineData;
 }
 
-export interface SelectControlConfig extends WithMultipleData<string | number> {
+export interface SelectControlConfig extends WithMultipleData<string> {
   type: 'select';
 }
 
-export interface RadioControlConfig extends WithMultipleData<string | number> {
+export interface RadioControlConfig extends WithMultipleData<string> {
   type: 'radio';
 }
 
@@ -99,6 +99,8 @@ export type ControlConfigWithValue =
   | BooleanControlConfig
   | TextControlConfig
   | ColorControlConfig
+  | SelectControlConfig
+  | RadioControlConfig
   | JsonControlConfig
   | VectorControlConfig;
 
